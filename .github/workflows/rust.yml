@@ -25,4 +25,9 @@ jobs:
         name: Generated Debug Artifacts
         path: |
           target/debug
+          !target/debug/.fingerprint
+          !target/debug/build
+          !target/debug/deps
+          !target/debug/examples
+          !target/debug/incremental
           
