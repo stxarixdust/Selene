@@ -8,7 +8,7 @@ use vst::prelude::*;
 use vst::plugin::{Info, Plugin, Category};
 use rand::random;
 
-const maxVoiceCount: u8 = 16;
+const MAX_VOICE_COUNT: u8 = 16;
 
 #[derive(Default)]
 
@@ -29,7 +29,7 @@ impl Selene {
 
     fn note_on(&mut self, data: [u8; 3]) {
         self.voices.push_back(voice::Voice::new_with_velocity(data[1], data[2]));
-        if self.voices.len() > maxVoiceCount as usize {
+        if self.voices.len() > MAX_VOICE_COUNT as usize {
             self.voices.pop_front();
         }
     }
@@ -66,7 +66,7 @@ impl Plugin for Selene {
     fn new(_host: HostCallback) -> Self {
         Selene {
             sample_rate: 44100.0,
-            voices: VecDeque::with_capacity(maxVoiceCount.into())
+            voices: VecDeque::with_capacity(MAX_VOICE_COUNT.into())
         }
     }
 
