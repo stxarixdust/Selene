@@ -1,7 +1,9 @@
 #[derive(Default)]
 
 pub struct Voice {
+    /// The intensity of the note. Ranges from 0 to 127.
     pub velocity: u8,
+    /// The pitch of the note. Ranges from 0 to 127.
     pub note: u8,
     /// Lifetime, this ought to continuously tick up for every sample played.
     /// This is a 32-bit unsigned integer, because it should only count up.
