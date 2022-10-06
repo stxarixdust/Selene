@@ -5,7 +5,7 @@ pub struct Voice {
     pub note: u8,
     /// Lifetime, this ought to continuously tick up for every sample played.
     /// This is a 32-bit unsigned integer, because it should only count up.
-    t: u32,
+    pub t: u32,
 }
 
 impl Voice {
