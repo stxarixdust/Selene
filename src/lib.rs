@@ -17,6 +17,7 @@ struct Selene {
     voices: VecDeque<voice::Voice>
 }
 
+#[allow(dead_code)]
 impl Selene {
     fn process_midi_event(&mut self, data: [u8; 3]) {
         match data[0] {
