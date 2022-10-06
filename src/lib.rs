@@ -28,7 +28,7 @@ impl Selene {
 
     fn note_on(&mut self, data: [u8; 3]) {
         self.voices.push_back(voice::Voice::new_with_velocity(data[1], data[2]));
-        if(self.voices.len() > maxVoiceCount as usize) {
+        if self.voices.len() > maxVoiceCount as usize {
             self.voices.pop_front();
         }
     }
@@ -68,6 +68,7 @@ impl Plugin for Selene {
             voices: VecDeque::with_capacity(maxVoiceCount.into())
         }
     }
+
     fn get_info(&self) -> Info {
         Info {
             name: "Selene".to_string(),
