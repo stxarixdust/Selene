@@ -27,4 +27,8 @@ impl Voice {
             t: 0u32
         }
     }
+    
+    pub fn tick(&mut self, n: u32) {
+        self.t += n;
+    }
 }
