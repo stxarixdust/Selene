@@ -5,11 +5,12 @@ use vst::prelude::AudioBuffer;
 
 #[derive(Default)]
 pub struct Sinebank {
-    amplitudes: [f32; 32]
+    /// Amplitudes of different harmonics, from 0 to 1
+    pub amplitudes: [f32; 32]
 }
 
 impl Sinebank {
-    pub fn new() -> Self {
+    pub fn new () -> Self {
         Sinebank {
             amplitudes: [0f32; 32]
         }
@@ -30,7 +31,7 @@ impl Sinebank {
             for buf_idx in 0..output_count {
                 let buff = outputs.get_mut(buf_idx);
                 let x = (t + sample_idx as u32) as f64;
-                buff[sample_idx] =
+                buff[sample_idx] +=
                     ((x * pitch * TAU / samplerate) as f32).sin();
             }
         }
