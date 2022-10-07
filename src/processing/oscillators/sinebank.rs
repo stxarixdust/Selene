@@ -31,8 +31,13 @@ impl Sinebank {
             for buf_idx in 0..output_count {
                 let buff = outputs.get_mut(buf_idx);
                 let x = (t + sample_idx as u32) as f64;
-                buff[sample_idx] +=
-                    ((x * pitch * TAU / samplerate) as f32).sin();
+                let f = x * pitch * TAU / samplerate;
+
+                for n in 0..self.amplitudes.len() {
+                    buff[sample_idx] +=
+                        self.amplitudes[n] as f32
+                        * (((n+1) as f64 * f) as f32).sin();
+                }
             }
         }
     }
