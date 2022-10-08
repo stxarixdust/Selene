@@ -1,6 +1,5 @@
 use std::f64::consts::TAU;
 
-use rand::random;
 use vst::prelude::AudioBuffer;
 
 #[derive(Default)]
