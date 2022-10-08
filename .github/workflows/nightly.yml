@@ -20,13 +20,17 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
     - uses: actions/checkout@v3
     - name: Build
       run: cargo build --verbose
-    - name: Release
+    - name: Release Linux .so
       uses: andelf/nightly-release@v0.0.4
+      if: ${{ matrix.os == ubuntu-latest }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -38,3 +42,17 @@ jobs:
           Nighly releases are not planned, they ocurr every night at 00:00 UTC
         files:
           target/debug/libselene.so
+    - name: Release Windows .dll
+      uses: andelf/nightly-release@v0.0.4
+      if: ${{ matrix.os == windows-latest }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: nightly
+        name: 'Nighly Release $$'
+        draft: false
+        body: |
+          This nightly release might be **extremely** unstable.
+          Nighly releases are not planned, they ocurr every night at 00:00 UTC
+        files:
+          target/debug/selene.dll
