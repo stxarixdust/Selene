@@ -40,5 +40,5 @@ jobs:
           This nightly release might be **extremely** unstable.
           Nighly releases are not planned, they ocurr every night at 00:00 UTC
         files:
-          ./target/debug/libselene.so
-          ./target/debug/selene.dll
+          target/debug/*.dll
+          target/debug/*.so
