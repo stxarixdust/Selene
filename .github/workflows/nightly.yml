@@ -20,10 +20,7 @@ env:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Build
@@ -40,5 +37,4 @@ jobs:
           This nightly release might be **extremely** unstable.
           Nighly releases are not planned, they ocurr every night at 00:00 UTC
         files:
-          target/debug/*.dll
-          target/debug/*.so
+          target/debug/libselene.so
