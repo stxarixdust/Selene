@@ -1,0 +1,33 @@
+name: Rust
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: cargo build --verbose
+    - name: Release
+      uses: andelf/nightly-release@v0.0.4
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: nightly
+        name: 'Nighly Release $$'
+        draft: false
+        body: |
+          This nightly release might be **extremely** unstable.
+          Nighly releases are not planned, they ocurr every night at 00:00 UTC
+        files:
+          ./target/debug/libselene.so
+          ./target/debug/selene.dll
