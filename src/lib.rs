@@ -1,11 +1,14 @@
 mod voice;
 mod processing;
+mod params;
 
 #[macro_use]
 extern crate vst;
 
 use std::collections::VecDeque;
+use std::sync::Arc;
 use processing::*;
+use params::Parameters;
 use vst::prelude::*;
 use vst::plugin::{Info, Plugin, Category};
 
@@ -20,7 +23,8 @@ struct SeleneProcessor {
 struct Selene {
     sample_rate: f64,
     voices: VecDeque<voice::Voice>,
-    processor: SeleneProcessor
+    processor: SeleneProcessor,
+    params: Arc<Parameters>,
 }
 
 #[allow(dead_code)]
@@ -70,7 +74,8 @@ impl Plugin for Selene {
             voices: VecDeque::with_capacity(MAX_VOICE_COUNT.into()),
             processor: SeleneProcessor {
                 osc_a: Sinebank::new() 
-            }
+            },
+            params: Arc::new(Parameters::default()),
         }
     }
 
@@ -80,6 +85,7 @@ impl Plugin for Selene {
             vendor: "Starburst Audio".to_string(),
             inputs: 0,
             outputs: 2,
+            parameters: 17,
             unique_id: 1337,
             category: Category::Synth,
             ..Info::default()
@@ -114,6 +120,13 @@ impl Plugin for Selene {
             }
         }
 
+        // Set up osc A acording to params
+        self.processor.osc_a.amplitude = self.params.osc_a_amplitude.get();
+        for i in 0..self.params.osc_a_partials.len() {
+            self.processor.osc_a.partials[i] =
+                self.params.osc_a_partials[i].get();
+        }
+
         // For each note played
         for (_, voice) in self.voices.iter_mut().enumerate() {
             self.processor.osc_a.process_buffer(
@@ -125,6 +138,10 @@ impl Plugin for Selene {
             // Tick up lifetime of voices by amount of samples played
             voice.tick(buffer.samples().try_into().unwrap());
         }
+    }
+
+    fn get_parameter_object(&mut self) -> Arc<dyn PluginParameters> {
+        Arc::clone(&self.params) as Arc<dyn PluginParameters>
     }
 }
 
