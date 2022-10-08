@@ -12,7 +12,9 @@ pub struct Voice {
 
 impl Voice {
     /// Initializes a `Voice` with its velocity set to default (100)
-    pub fn new(note: u8) -> Voice { Self::new_with_velocity(note, 100u8) }
+    pub fn new(note: u8) -> Voice {
+        Self::new_with_velocity(note, 100u8)
+    }
 
     pub fn new_with_velocity(note: u8, velocity: u8) -> Voice {
         if note > 127 {
