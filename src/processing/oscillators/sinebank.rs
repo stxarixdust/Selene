@@ -5,14 +5,16 @@ use vst::prelude::AudioBuffer;
 
 #[derive(Default)]
 pub struct Sinebank {
-    /// Amplitudes of different harmonics, from 0 to 1
-    pub amplitudes: [f32; 32]
+    pub amplitude: f32,
+    /// Partials of different harmonics, from 0 to 1
+    pub partials: [f32; 16]
 }
 
 impl Sinebank {
     pub fn new () -> Self {
         Sinebank {
-            amplitudes: [0f32; 32]
+            amplitude: 1.0f32,
+            partials: [0f32; 16]
         }
     }
 
@@ -33,9 +35,11 @@ impl Sinebank {
                 let x = (t + sample_idx as u32) as f64;
                 let f = x * pitch * TAU / samplerate;
 
-                for n in 0..self.amplitudes.len() {
+                for n in 0..self.partials.len() {
+                    // TODO: Get rid of aliasing
                     buff[sample_idx] +=
-                        self.amplitudes[n] as f32
+                        self.amplitude
+                        * self.partials[n]
                         * (((n+1) as f64 * f) as f32).sin();
                 }
             }
