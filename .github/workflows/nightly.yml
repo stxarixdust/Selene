@@ -30,7 +30,7 @@ jobs:
       run: cargo build --verbose
     - name: Release Linux .so
       uses: andelf/nightly-release@v0.0.4
-      if: ${{ matrix.os == ubuntu-latest }}
+      if: ${{ matrix.os == 'ubuntu-latest' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -44,7 +44,7 @@ jobs:
           target/debug/libselene.so
     - name: Release Windows .dll
       uses: andelf/nightly-release@v0.0.4
-      if: ${{ matrix.os == windows-latest }}
+      if: ${{ matrix.os == 'windows-latest' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
