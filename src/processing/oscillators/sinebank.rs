@@ -21,6 +21,7 @@ impl Sinebank {
         &mut self,
         buffer: &mut AudioBuffer<f32>,
         t: u32,
+        velocity: u8,
         pitch: f64,
         samplerate: f64
     ) {
@@ -41,6 +42,7 @@ impl Sinebank {
                         // Calculate the signal of the partial
                         buff[sample_idx] +=
                             self.amplitude
+                            * (velocity as f32 / 127.0)
                             * self.partials[n]
                             * (((n+1) as f64 * f) as f32).sin();
                     }

@@ -132,6 +132,7 @@ impl Plugin for Selene {
             self.processor.osc_a.process_buffer(
                 buffer,
                 voice.t,
+                voice.velocity,
                 Selene::note_to_pitch(voice.note),
                 self.sample_rate
             );
