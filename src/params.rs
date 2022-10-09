@@ -9,7 +9,7 @@ impl Default for Parameters {
     fn default() -> Parameters {
         Parameters {
             osc_a_amplitude: AtomicFloat::new(0.75),
-            osc_a_partials: [AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0)],
+            osc_a_partials: [AtomicFloat::new(1.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0), AtomicFloat::new(0.0)],
         }
     }
 }
