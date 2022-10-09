@@ -35,11 +35,15 @@ impl Sinebank {
                 let f = x * pitch * TAU / samplerate;
 
                 for n in 0..self.partials.len() {
-                    // TODO: Get rid of aliasing
-                    buff[sample_idx] +=
-                        self.amplitude
-                        * self.partials[n]
-                        * (((n+1) as f64 * f) as f32).sin();
+                    // If the partial is above the Nyquist-Shannon frequency,
+                    // skip it (this prevents aliasing)
+                    if (pitch * (n+1) as f64) < (samplerate / 2.0) {
+                        // Calculate the signal of the partial
+                        buff[sample_idx] +=
+                            self.amplitude
+                            * self.partials[n]
+                            * (((n+1) as f64 * f) as f32).sin();
+                    }
                 }
             }
         }
